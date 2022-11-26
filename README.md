@@ -1,4 +1,4 @@
-# dotDOTFILES
+# dotFILES
 == I Am Using GitHub Under Protest ==
 
 These dotfiles are currently hosted on GitHub. This is not ideal; GitHub is a
