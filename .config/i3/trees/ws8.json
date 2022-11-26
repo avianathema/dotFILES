@@ -1,0 +1,120 @@
+// vim:ts=4:sw=4:et
+{
+    // floating_con with 1 children
+    "border": "none",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": null,
+    "rect": {
+       "height": 462,
+       "width": 760,
+       "x": 2310,
+       "y": 65
+    },
+    "type": "floating_con",
+    "nodes": [
+        {
+            "border": "none",
+            "current_border_width": 0,
+            "floating": "user_on",
+            "geometry": {
+               "height": 942,
+               "width": 1860,
+               "x": 1950,
+               "y": 45
+            },
+            "marks": [],
+            "name": "emrys@kilgharrah: ~",
+            "percent": 1,
+            "swallows": [
+               {
+               // "class": "^qterminal$",
+               // "instance": "^qterminal$",
+               // "title": "^emrys\\@kilgharrah\\:\\ \\~$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // floating_con with 1 children
+    "border": "none",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": null,
+    "rect": {
+       "height": 462,
+       "width": 410,
+       "x": 3070,
+       "y": 65
+    },
+    "type": "floating_con",
+    "nodes": [
+        {
+            "border": "none",
+            "current_border_width": 0,
+            "floating": "user_on",
+            "geometry": {
+               "height": 942,
+               "width": 1860,
+               "x": 1950,
+               "y": 45
+            },
+            "marks": [],
+            "name": "emrys@kilgharrah: ~",
+            "percent": 1,
+            "swallows": [
+               {
+               // "class": "^qterminal$",
+               // "instance": "^qterminal$",
+               // "title": "^emrys\\@kilgharrah\\:\\ \\~$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}
+
+{
+    // floating_con with 1 children
+    "border": "none",
+    "floating": "auto_off",
+    "layout": "splith",
+    "marks": [],
+    "percent": null,
+    "rect": {
+       "height": 222,
+       "width": 1860,
+       "x": 1950,
+       "y": 805
+    },
+    "type": "floating_con",
+    "nodes": [
+        {
+            "border": "none",
+            "current_border_width": 0,
+            "floating": "user_on",
+            "geometry": {
+               "height": 942,
+               "width": 1860,
+               "x": 1950,
+               "y": 45
+            },
+            "marks": [],
+            "name": "cava",
+            "percent": 1,
+            "swallows": [
+               {
+               // "class": "^qterminal$",
+               // "instance": "^qterminal$",
+               // "title": "^cava$"
+               }
+            ],
+            "type": "con"
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "none",
+    "current_border_width": 0,
+    "floating": "auto_off",
+    "geometry": {
+       "height": 630,
+       "width": 890,
+       "x": 0,
+       "y": 0
+    }
+    ,"marks": [],
+    "name": "Tilix: emrys@kilgharrah: ~",
+    "percent": 1,
+    "swallows": [
+       {
+       "class": "^Tilix$",
+       "instance": "^tilix$",
+       "title": "^Tilix\\:\\ emrys\\@kilgharrah\\:\\ \\~$"
+       }
+    ]
+    ,"type": "con"
+}
+

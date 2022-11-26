@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Creates and Sets Updated Wordcloud Wallpaper Hourly
+
+# Creates New Wordlcoud
+python3 /home/emrys/.config/polybar/ricericebaby/scripts/proccloudwallpaper/generateWallpaper.py &&
+
+sleep 2 &&
+
+# Sets New Wordcloud As Laptop Wallpaper
+nitrogen --head=0 --set-auto /home/emrys/.config/polybar/ricericebaby/scripts/proccloudwallpaper/wallpaper.png &&
+
+sleep 1 &&
+
+# Keeps Lockscreen Up to Date
+/home/emrys/.local/bin/betterlockscreen -u /home/emrys/.config/polybar/ricericebaby/scripts/proccloudwallpaper/wallpaper.png -u /home/emrys/Pictures/Backgrounds/1-kali.jpeg --display 1

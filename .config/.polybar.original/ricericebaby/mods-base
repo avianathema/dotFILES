@@ -1,0 +1,159 @@
+;===========================================================
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;===========================================================
+[module/i3]
+type                            = internal/i3
+
+ws-icon-0						= 1;%{T2}%{F#e6e6e6}✡︎%{F-}%{T-}
+ws-icon-1						= 2;%{T2}%{F#e6e6e6}%{F-}%{T-}
+ws-icon-2						= 3;%{T2}%{F#e6e6e6}%{F-}%{T-}
+ws-icon-3						= 4;%{T2}%{F#e6e6e6}%{F-}%{T-}
+ws-icon-4						= 5;%{T2}%{F#e6e6e6}%{F-}%{T-}
+ws-icon-5						= 6;%{T2}%{F#e6e6e6}阮%{F-}%{T-}
+ws-icon-6						= 7;%{T2}%{F#e6e6e6}ﭮ%{F-}%{T-}
+ws-icon-7						= 8;%{T2}%{F#e6e6e6}%{F-}%{T-}
+ws-icon-8						= 9;%{T2}%{F#e6e6e6}%{F-}%{T-}
+ws-icon-default					= %{T2}%{F#e6e6e6}%{F-}%{T-}
+
+label-focused                   = %icon%
+label-focused-background        = ${colors.background-alt}
+label-focused-underline         = ${colors.teal}
+label-focused-padding           = 1
+
+label-unfocused                 = %icon%
+label-unfocused-padding         = 1
+
+label-visible                   = %icon%
+label-visible-padding           = 1
+
+label-urgent                    = %icon%
+label-urgent-background         = ${colors.red}
+label-urgent-padding            = 1
+
+index-sort                      = true
+enable-scroll                   = true
+wrapping-scroll                 = false
+reverse-scroll                  = false
+enable-click                    = true
+pin-workspaces					= false
+show-urgent						= true
+
+strip-wsnumbers					= true
+
+[module/i3hdmi]
+inherit							= module/i3
+
+label-focused-background        = ${colors.teal}
+label-focused-underline         = ${colors.primary}
+
+pin-workspaces					= true
+show-urgent						= true
+
+[module/xwindow]
+type                            = internal/xwindow
+label                           = %title:0:42:...%
+
+[module/pulseaudio]
+type                            = internal/pulseaudio
+
+format-volume-prefix            = "%{T2}墳%{T-} "
+format-volume                   = <label-volume>
+
+label-volume                    = %percentage%%
+
+label-muted                     = %{T2}ﱝ%{T-} MUTE
+label-muted-foreground          = ${colors.red}
+
+[module/xkeyboard]
+type                            = internal/xkeyboard
+blacklist-0                     = num lock
+
+label-layout                    = %{T2}%{T-} %layout%
+label-layout-foreground         = ${colors.primary}
+
+label-indicator-padding         = 1
+label-indicator-margin          = 0
+label-indicator-foreground      = ${colors.primary}
+label-indicator-background      = ${colors.teal}
+
+[module/memory]
+type						= internal/memory
+interval					= 2
+format-prefix				= "%{T2}%{T-}"
+; format-prefix-foreground	= ${colors.secondary}
+label						= %percentage_used:2%%
+
+[module/cpu]
+type						= internal/cpu
+interval					= 2
+format-prefix				= "%{T2}﬙%{T-}"
+; format-prefix-foreground	= ${colors.secondary}
+label						= %percentage:2%%
+
+[module/eth]
+type						= internal/network
+interface-type				= wired
+interface					= eth0
+
+interval					= 1.0
+accumulate-stats			= true
+unknown-as-up				= true
+
+label-connected				= %{T2}%{T-} %local_ip%
+label-disconnected			= %{F#D41919}%{T2}%{T-}%{F-}
+
+format-connected			= <label-connected>
+format-disconnected			= <label-disconnected>
+
+[module/wlan]
+type						= internal/network
+interface-type				= wireless
+interface					= wlan0
+
+interval					= 1.0
+accumulate-stats			= true
+unknown-as-up				= true
+
+label-connected				= %{T2}直%{T-} %essid%
+label-disconnected			= %{F#D41919}%{T2}睊%{T-}%{F-}
+
+format-connected			= <label-connected>
+format-disconnected			= <label-disconnected>
+
+[module/downspeed]
+type						= internal/network
+interface-type				= wired
+interval					= 1.0
+accumulate-stats			= true
+unknown-as-up				= true
+
+label-connected				= %{T2}ﯲ%{T-}%downspeed:9% %{F#0099a1}|%{F-}
+label-disconnected			= %{F#D41919}%{T2}ﰸ%{T-}%{F-} %{F#0099a1}|%{F-}
+
+format-connected			= <label-connected>
+format-disconnected			= <label-disconnected>
+
+[module/date]
+type                            = internal/date
+interval                        = 1
+
+date							= {%a %m/%d}%{T2}%{T-}[%I:%M %Z]
+date-alt						= %Y-%m-%eT%k:%M:%S%z
+
+label                           = %date%
+label-foreground                = ${colors.primary}
+
+[module/hdmidate]
+type                            = internal/date
+interval                        = 1
+
+date							= "{%m/%d}%{T2}%{T-}[%I:%M]"
+
+label                           = %date%
+label-foreground                = ${colors.primary}
+

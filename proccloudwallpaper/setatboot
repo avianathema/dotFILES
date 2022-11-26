@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Generates Worcloud of Current Procs
+python3 /home/emrys/proccloudwallpaper/generateWallpaper.py &&
+
+sleep 3 &&
+
+# Sets Wordcloud as Background on Laptop
+nitrogen --head=0 --set-auto /home/emrys/proccloudwallpaper/wallpaper.png &&
+
+sleep 1 &&
+
+# Sets 'Matching' Background on HDMI
+nitrogen --head=1 --set-auto /home/emrys/Pictures/Backgrounds/1-kali.jpeg &&
+
+sleep 1 &&
+
+# Updates BetterLockScreen w/ Both Backgrounds
+/home/emrys/.local/bin/betterlockscreen -u /home/emrys/proccloudwallpaper/wallpaper.png -u /home/emrys/Pictures/Backgrounds/1-kali.jpeg --display 1

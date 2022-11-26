@@ -1,0 +1,12 @@
+*.o
+*.swp
+*.img
+*.pcap
+*.dni
+Makefile.win
+nmrpflash.depend
+nmrpflash.exe
+nmrpflash.layout
+nmrpflash*.zip
+Npcap/
+Obj/

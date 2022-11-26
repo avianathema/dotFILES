@@ -1,0 +1,289 @@
+;===========================================================
+;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
+;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
+;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
+;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
+;===========================================================
+[fs-base]
+type = internal/fs
+fixed-values = true
+interval = 30
+
+[module/fs-root]
+inherit = fs-base
+mount-0 = /
+label-mounted = %{T2}ﲂ%{T-} %percentage_used%%
+
+[module/fs-home]
+inherit = fs-base
+mount-0 = /home
+label-mounted = %{T2}%{T-} %percentage_used%%
+
+[module/fs-magen]
+inherit = fs-base
+mount-0 = /magen
+label-mounted = %{T2}%{T-} %percentage_used%%
+label-unmounted = %{T2}%{T-} %{F#D41919}%{T2}ﰸ%{T-}%{F-}
+
+##
+
+[module/battery]
+type							= internal/battery
+full-at							= 95
+low-at							= 10
+
+; $ ls -1 /sys/class/power_supply/
+battery							= BAT0
+adapter							= ADP0
+
+; If an inotify event haven't been reported in this many
+; seconds, manually poll for new values.
+;
+; Needed as a fallback for systems that don't report events
+; on sysfs/procfs.
+;
+; Disable polling by setting the interval to 0.
+;
+; Default: 5
+poll-interval					= 60
+
+; Available tags:
+;   <label-charging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-charging>
+format-charging = <animation-charging> <label-charging>
+
+; Available tags:
+;   <label-discharging> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+;   <animation-discharging>
+format-discharging = <ramp-capacity> <label-discharging>
+
+; Available tags:
+;   <label-full> (default)
+;   <bar-capacity>
+;   <ramp-capacity>
+format-full = <ramp-capacity> <label-full>
+
+; Format used when battery level drops to low-at
+; If not defined, format-discharging is used instead.
+; Available tags:
+;   <label-low>
+;   <animation-low>
+;   <bar-capacity>
+;   <ramp-capacity>
+; New in version 3.6.0
+format-low = <label-low> <animation-low>
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current charge rate in watts)
+label-charging = %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+label-discharging = %percentage%%
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+label-full = FULL
+
+; Available tokens:
+;   %percentage% (default) - is set to 100 if full-at is reached
+;   %percentage_raw%
+;   %time%
+;   %consumption% (shows current discharge rate in watts)
+; New in version 3.6.0
+label-low = LOW
+
+; Only applies if <ramp-capacity> is used
+ramp-capacity-0 = %{T2}%{T-}
+ramp-capacity-1 = %{T2}%{T-}
+ramp-capacity-2 = %{T2}%{T-}
+ramp-capacity-3 = %{T2}%{T-}
+ramp-capacity-4 = %{T2}%{T-}
+
+; Only applies if <bar-capacity> is used
+bar-capacity-width = 10
+
+; Only applies if <animation-charging> is used
+animation-charging-0 = %{T2}%{T-}
+animation-charging-1 = %{T2}%{T-}
+animation-charging-2 = %{T2}%{T-}
+animation-charging-3 = %{T2}%{T-}
+animation-charging-4 = %{T2}%{T-}
+; Framerate in milliseconds
+animation-charging-framerate = 750
+
+; Only applies if <animation-discharging> is used
+animation-discharging-0 = %{T2}%{T-}
+animation-discharging-1 = %{T2}%{T-}
+animation-discharging-2 = %{T2}%{T-}
+animation-discharging-3 = %{T2}%{T-}
+animation-discharging-4 = %{T2}%{T-}
+; Framerate in milliseconds
+animation-discharging-framerate = 500
+
+; Only applies if <animation-low> is used
+; New in version 3.6.0
+animation-low-0 = !
+animation-low-1 = 
+animation-low-2 = X
+animation-low-3 = 
+animation-low-framerate = 200
+
+###
+
+[module/temperature]
+type = internal/temperature
+
+; Seconds to sleep between updates
+; Default: 1
+interval = 1
+
+; Thermal zone to use
+; To list all the zone types, run 
+; $ for i in /sys/class/thermal/thermal_zone*; do echo "$i: $(<$i/type)"; done
+; Default: 0
+thermal-zone = 8
+
+; Full path of temperature sysfs path
+; Use `sensors` to find preferred temperature source, then run
+; $ for i in /sys/class/hwmon/hwmon*/temp*_input; do echo "$(<$(dirname $i)/name): $(cat ${i%_*}_label 2>/dev/null || echo $(basename ${i%_*})) $(readlink -f $i)"; done
+; to find path to desired file
+; Default reverts to thermal zone setting
+hwmon-path = /sys/devices/virtual/thermal/thermal_zone9/hwmon4/temp1_input
+
+; Base temperature for where to start the ramp (in degrees celsius)
+; Default: 0
+base-temperature = 20
+
+; Threshold temperature to display warning label (in degrees celsius)
+; Default: 80
+warn-temperature = 80
+
+; Whether or not to show units next to the temperature tokens (°C, °F)
+; Default: true
+units = true
+
+; Available tags:
+;   <label> (default)
+;   <ramp>
+format = <ramp> <label>
+
+; Available tags:
+;   <label-warn> (default)
+;   <ramp>
+format-warn = <ramp> <label-warn>
+
+; Available tokens:
+;   %temperature% (deprecated)
+;   %temperature-c%   (default, temperature in °C)
+;   %temperature-f%   (temperature in °F)
+label = %temperature-c%
+label-foreground = ${colors.primary}
+; Available tokens:
+;   %temperature% (deprecated)
+;   %temperature-c%   (default, temperature in °C)
+;   %temperature-f%   (temperature in °F)
+label-warn = %temperature-c%
+label-warn-foreground = ${colors.red}
+
+; Requires the <ramp> tag
+; The icon selection will range from `base-temperature` to `warn-temperature`,
+; temperatures at and above `warn-temperature` will use the last icon
+; and temperatures at and below `base-temperature` will use `ramp-0`. 
+; All other icons are distributed evenly between the two temperatures.
+ramp-0 = %{F#377cf1}%{T3}%{T-}%{F-}
+ramp-1 = %{F#0099a1}%{T3}%{T-}%{F-}
+ramp-2 = %{F#fd7d00}%{T3}%{T-}%{F-}
+ramp-3 = %{F#d31919}%{T3}%{T-}%{F-}
+; ramp-foreground = ${colors.primary}
+
+###
+
+[module/pactl-out]
+type = custom/script
+tail = true
+label-foreground = ${colors.foreground}
+
+exec = ~/.local/bin/pulseaudio-control --icons-volume "%{T2}%{T-} ,%{T2}%{T-} " --icon-muted "%{T2}%{T-} " --node-nicknames-from "device.nick" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo:%{T2}%{T-}" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo.2:%{T2}%{T-}" --node-nickname "alsa_output.pci-0000_00_1f.3.analog-stereo.3:%{T2}%{T-}" --node-nickname "alsa_output.pci-0000_01_00.1.hdmi-stereo:%{T2}%{T-}" --node-nickname "alsa_output.pci-0000_01_00.1.hdmi-stereo.2:%{T2}%{T-}" --node-nickname "alsa_output.pci-0000_01_00.1.hdmi-stereo.3:%{T2}%{T-}" --node-nickname "bluez_output.00_42_79_B6_B6_5F.a2dp-sink: %{T2}%{T-}" --node-nickname "bluez_output.00_42_79_B6_B6_5F.1: %{T2}%{T-}" --node-nickname "bluez_sink.00_42_79_B6_B6_5F.a2dp_sink: %{T2}%{T-}" listen
+click-right = exec pavucontrol &
+click-left = ~/.local/bin/pulseaudio-control togmute
+click-middle = ~/.local/bin/pulseaudio-control --node-blacklist "alsa_output.pci-0000_01_00.1.hdmi-stereo-extra2" next-node
+scroll-up = ~/.local/bin/pulseaudio-control --volume-max 100 up
+scroll-down = ~/.local/bin/pulseaudio-control --volume-max 100 down
+
+[module/pactl-in]
+type = custom/script
+tail = true
+label-foreground = ${colors.foreground}
+
+; Use --node-blacklist to remove the unwanted PulseAudio .monitor that are child of sinks
+exec = ~/.local/bin/pulseaudio-control  --node-type input --icons-volume "" --icon-muted "" --node-nickname "alsa_input.pci-0000_00_1f.3.analog-stereo:%{T2}%{T-}" --node-nickname "alsa_output.pci-0000_0c_00.3.analog-stereo:  Webcam" --node-nickname "alsa_output.usb-Kingston_HyperX_Virtual_Surround_Sound_00000000-00.analog-stereo:  Headphones" --node-blacklist "*.monitor" listen
+click-right = exec pavucontrol &
+click-left = ~/.local/bin/pulseaudio-control --node-type input togmute
+click-middle = ~/.local/bin/pulseaudio-control --node-type input next-node
+scroll-up = ~/.local/bin/pulseaudio-control --node-type input --volume-max 100 up
+scroll-down = ~/.local/bin/pulseaudio-control --node-type input --volume-max 100 down
+
+###
+
+[module/spotify]
+type = custom/script
+tail = true
+interval = 1
+format-prefix = "%{F#1DB954}%{T2}%{A1:spotify:}阮%{A}%{T-}%{F-} "
+format-suffix = "  %{F#FFFFFF}%{T3}%{A1:playerctl previous -p spotify:}玲%{A}%{T-}%{F-}  %{F#FFFFFF}%{T2}%{A1:playerctl play-pause -p spotify:}懶%{A}%{T-}%{F-}  %{F#FFFFFF}%{T3}%{A1:playerctl next -p spotify:}怜%{A}%{T-}%{F-}"
+format = <label>
+exec = ~/.config/polybar/scripts/scroll_spotify_status.sh
+
+[module/spot-info]
+type = custom/script
+tail = true
+interval = 1
+; prefix symbol is shown before the text
+format-prefix = "{F#1DB954}%{T2}%{A1:spotify:}阮%{A}%{T-}%{F-} "
+format = <label>
+exec = ~/.config/polybar/scripts/scroll_spotify_status.sh
+
+[module/spot-prev]
+type = custom/script
+exec = echo "%{T2}玲%{T-}"
+format = <label>
+click-left = playerctl previous -p spotify
+
+[module/spot-plpa]
+type = custom/script
+; Playing
+exec = echo "%{T2}懶%{T-}"
+click-left = playerctl play-pause -p spotify
+
+[module/spot-next]
+type = custom/script
+exec = echo "%{T2}怜%{T-}"
+format = <label>
+click-left = playerctl next -p spotify
+
+###
+
+[module/caffeine]
+type = custom/ipc
+hook-0 = echo '%{F#D41919}%{T2}%{T-}%{F-}'  #Use a Nerd or FontAwesome icon for the off state
+hook-1 = echo '%{F#0099a1}%{T2}%{T-}%{F-}'  #Use a Nerd or FontAwesome icon for the on state
+click-left = $HOME/.config/polybar/scripts/caffeine
+initial = 1
+format-background = ${color.magenta}
+
+[module/appmenu]
+
